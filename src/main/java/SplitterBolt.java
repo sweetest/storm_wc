@@ -15,8 +15,6 @@ import java.util.Map;
  */
 //To be implemented
 public class SplitterBolt extends BaseBasicBolt {
-	public static Logger logger = LoggerFactory.getLogger("notifier");
-
 	@Override
 	public void prepare(Map stormConf, TopologyContext context) {
 	}
@@ -28,7 +26,8 @@ public class SplitterBolt extends BaseBasicBolt {
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
 		String sentence = tuple.getString(0);
 		for (String word : sentence.split(" ")) {
-			collector.emit(new Values(word));
+            //To-do
+            //1. 각 단어를 emit한다.
 		}
 	}
 }

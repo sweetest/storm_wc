@@ -8,119 +8,11 @@
     <artifactId>storm-wc</artifactId>
     <version>1.0</version>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <env>local</env>
-                <storm.scope>compile</storm.scope>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <mainClass>com.naver.labs.nelo2.notifier.NotifierTopology</mainClass>
-                        </configuration>
-                    </plugin>
-                </plugins>
-                <resources>
-                    <resource>
-                        <directory>config/${env}</directory>
-                        <filtering>true</filtering>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        <profile>
-            <id>cluster</id>
-            <properties>
-                <env>cluster</env>
-                <storm.scope>provided</storm.scope>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-shade-plugin</artifactId>
-                        <version>2.2</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>shade</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <finalName>${artifactId}</finalName>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>storm:storm</exclude>
-                          l      </excludes>
-                            </artifactSet>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-
     <dependencies>
         <dependency>
             <groupId>storm</groupId>
             <artifactId>storm</artifactId>
             <version>0.9.0.1</version>
-            <scope>${storm.scope}</scope>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.4.2</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.nhncorp.nelo2</groupId>
-            <artifactId>nelo2-java-sdk-logback</artifactId>
-            <version>1.3.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.thrift</groupId>
-            <artifactId>libthrift</artifactId>
-            <version>0.9.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.9</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.0.9</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -129,16 +21,6 @@
         <repository>
             <id>clojars.org</id>
             <url>http://clojars.org/repo</url>
-        </repository>
-        <repository>
-            <id>nhn.release.repository</id>
-            <url>http://repo.nhncorp.com/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
         </repository>
     </repositories>
 

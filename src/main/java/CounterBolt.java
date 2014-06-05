@@ -5,8 +5,8 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.Jedis;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,20 +14,24 @@ import java.util.Map;
  */
 //To be implemented
 public class CounterBolt extends BaseBasicBolt {
-	public static Logger logger = LoggerFactory.getLogger("notifier");
-	private static Jedis jedis;
+    private Map<String,Integer> counts = new HashMap<String,Integer>();
 
 	@Override
 	public void prepare(Map stormConf, TopologyContext context) {
-		jedis = new Jedis("10.99.212.104",6379);
-		jedis.select(1);
 	}
 
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 	}
 
 	public void execute(Tuple tuple, BasicOutputCollector collector) {
-		String word = tuple.getString(0);
-		jedis.incr(word);
-	}
+        //To-do
+        //1. tuple에서 단어를 읽어온다.
+        String word = "TODO";
+        Integer count = counts.get(word);
+        if (count == null)
+            count = 0;
+        count++;
+        counts.put(word, count);
+        System.out.println(word+":"+count);
+    }
 }
